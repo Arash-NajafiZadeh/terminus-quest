@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#070a10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Terminus Quest">
+<title>BO6 Terminus — Quest Guide</title>
+
+<style>
+:root{
+  --bg:#070a10;--panel:#0e141d;--panel2:#121b27;--line:#29384b;
+  --text:#f7f9fc;--muted:#94a3b5;--yellow:#ffd21a;--cyan:#20d9ff;
+  --green:#43e27c;--red:#ff5262;--purple:#b66cff;--orange:#ff9c3d;
+  --blue:#5d8cff;--shadow:0 12px 35px rgba(0,0,0,.32)
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Tahoma,sans-serif;
+  padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);
+  overscroll-behavior-y:none
+}
+button{font:inherit;cursor:pointer}
+.app{max-width:760px;margin:auto;min-height:100dvh}
+header{
+  position:sticky;top:0;z-index:20;background:rgba(7,10,16,.96);
+  border-bottom:1px solid var(--line);padding:10px 12px 9px;
+  backdrop-filter:blur(14px)
+}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+h1{font-size:16px;line-height:1.2;margin:0;font-weight:1000}
+.sub{font-size:9px;color:var(--muted);margin-top:4px}
+.reset{border:1px solid #3a4a60;background:#111a27;color:#fff;border-radius:10px;padding:8px 10px;font-size:10px;font-weight:900}
+.progress{height:6px;background:#182231;border-radius:99px;margin-top:9px;overflow:hidden}
+.progress i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--yellow),var(--cyan),var(--purple),var(--orange));transition:.25s}
+main{padding:9px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:9px}
+.mapHead{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;background:#0b1119;border-bottom:1px solid var(--line)}
+.mapHead b{font-size:11px}.mapHead span{font-size:9px;color:var(--muted)}
+.mapWrap{background:#071018;position:relative;aspect-ratio:1.12/1;overflow:hidden}
+svg{width:100%;height:100%;display:block;touch-action:none}
+.zone{fill:#152330;stroke:#31495e;stroke-width:2}.zone2{fill:#182c25;stroke:#3d6651;stroke-width:2}
+.water{fill:#071923}.road{fill:none;stroke:#53697b;stroke-width:6;stroke-linecap:round;opacity:.55}
+.route{fill:none;stroke:#ffd21a;stroke-width:4;stroke-dasharray:8 7;opacity:.85}
+.label{font-size:13px;fill:#f4f7fb;font-weight:900;text-anchor:middle}
+.small{font-size:9px;fill:#aebdcb;text-anchor:middle}
+.node{stroke:#05070a;stroke-width:3}.ntext{font-size:11px;fill:#05070a;font-weight:1000;text-anchor:middle;dominant-baseline:middle}
+.mapControls{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:8px;background:#0a1018}
+.mapControls button,.filter button{
+  border:1px solid #304055;background:#121b28;color:#fff;border-radius:11px;
+  padding:9px 7px;font-size:10px;font-weight:900
+}
+.legend{display:flex;gap:6px;overflow:auto;padding:8px;background:#0a1018;border-top:1px solid #1e2a39}
+.legend span{white-space:nowrap;border:1px solid #26364a;border-radius:99px;padding:5px 8px;font-size:9px;color:#c8d2dd}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;vertical-align:middle;margin-left:4px}
+.step{padding:12px}
+.stepTop{display:flex;gap:9px;align-items:flex-start}
+.badge{width:39px;height:39px;flex:0 0 39px;border-radius:12px;display:grid;place-items:center;color:#05070a;font-weight:1000}
+.yellow{background:var(--yellow)}.cyan{background:var(--cyan)}.green{background:var(--green)}
+.red{background:var(--red)}.purple{background:var(--purple)}.orange{background:var(--orange)}.blue{background:var(--blue)}
+.kicker{font-size:9px;color:var(--muted);font-weight:900}
+h2{font-size:18px;line-height:1.35;margin:2px 0}
+.where{font-size:10px;color:#b8c4d0}
+ol{margin:11px 0 0;padding:0 21px 0 0}
+li{font-size:12.5px;line-height:1.8;margin:7px 0;color:#e9edf3}
+li::marker{font-weight:1000;color:#fff}
+.tip{margin-top:10px;background:#141e2b;border:1px solid #2b3b50;border-radius:11px;padding:9px;font-size:10.5px;line-height:1.8;color:#cbd6e1}
+.warn{margin-top:7px;background:#24191b;border:1px solid #58333a;color:#ffd8dc}
+.done{
+  width:100%;border:0;border-radius:14px;background:#fff;color:#05070a;
+  padding:14px 10px;margin-top:10px;font-size:13px;font-weight:1000
+}
+.done.checked{background:var(--green)}
+.nav{display:grid;grid-template-columns:1fr 1.7fr 1fr;gap:7px}
+.nav button{border:1px solid #2d3d52;background:#111a27;color:#fff;border-radius:12px;padding:11px 6px;font-size:10.5px;font-weight:900}
+.nav .go{background:#fff;color:#05070a}
+.footer{font-size:9px;color:#69798c;line-height:1.7;padding:4px 3px 20px}
+.search{
+  width:100%;border:1px solid #2d3d52;background:#0d151f;color:#fff;
+  border-radius:11px;padding:10px;font-size:11px;outline:none;margin-bottom:8px
+}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.quick button{border:1px solid #293a50;background:#101925;color:#dce5ee;border-radius:10px;padding:9px 3px;font-size:9px;font-weight:900}
+.quick button.active{background:#fff;color:#05070a}
+.toast{
+  position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));
+  max-width:736px;margin:auto;background:#fff;color:#05070a;padding:12px;border-radius:13px;
+  font-size:11px;font-weight:900;text-align:center;z-index:50;display:none;box-shadow:var(--shadow)
+}
+@media(max-width:390px){h2{font-size:16px}.label{font-size:11px}.small{font-size:8px}.quick button{font-size:8px}}
+</style>
+</head>
+
+<body>
+<div class="app">
+<header>
+  <div class="top">
+    <div>
+      <h1>🎮 TERMINUS — QUEST GUIDE</h1>
+      <div class="sub">نسخه مستقل • مخصوص iPhone • بدون Drag • ذخیره خودکار</div>
+    </div>
+    <button class="reset" onclick="resetAll()">↺ ریست</button>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="mapHead">
+      <b id="mapTitle">نقشه مسیر Quest</b>
+      <span id="mapMode">نمای مرحله</span>
+    </div>
+
+    <div class="mapWrap">
+      <svg id="map" viewBox="0 0 700 620" aria-label="Terminus schematic map">
+        <rect class="water" x="0" y="0" width="700" height="620"/>
+        <!-- islands / major areas -->
+        <path class="zone" d="M40 75 Q90 35 175 55 L220 115 195 180 100 190 45 150Z"/>
+        <text class="label" x="130" y="108">Guard Station</text><text class="small" x="130" y="126">Spawn / Peck</text>
+
+        <path class="zone" d="M250 50 Q330 25 410 65 L430 145 380 190 275 175 235 115Z"/>
+        <text class="label" x="335" y="96">Sea Tower</text><text class="small" x="335" y="114">Docks</text>
+
+        <path class="zone2" d="M45 245 Q105 205 190 230 L225 315 175 365 70 350 35 300Z"/>
+        <text class="label" x="130" y="280">Living Quarters</text><text class="small" x="130" y="298">Jug / AMP</text>
+
+        <path class="zone" d="M255 220 Q345 185 430 225 L455 330 390 385 285 355 240 290Z"/>
+        <text class="label" x="350" y="270">Bio Lab</text><text class="small" x="350" y="288">AMP / PAP / Boss</text>
+
+        <path class="zone" d="M485 205 Q570 175 650 220 L670 305 620 350 515 335 475 275Z"/>
+        <text class="label" x="575" y="260">Storage</text><text class="small" x="575" y="278">Area</text>
+
+        <path class="zone2" d="M40 425 Q105 390 180 420 L215 500 165 555 70 540 35 480Z"/>
+        <text class="label" x="125" y="460">Rec Yard</text>
+
+        <path class="zone" d="M260 420 Q330 385 405 415 L445 500 390 565 290 545 250 480Z"/>
+        <text class="label" x="345" y="455">Engineering</text><text class="small" x="345" y="473">Safety First</text>
+
+        <path class="zone" d="M500 405 Q570 375 640 420 L675 495 625 555 530 535 485 470Z"/>
+        <text class="label" x="580" y="450">Crab Island</text>
+
+        <!-- roads / route -->
+        <path class="road" d="M150 160 C170 220 205 235 260 260 C300 280 300 310 330 345 C370 385 370 410 350 435"/>
+        <path class="road" d="M430 120 C420 180 405 220 390 250"/>
+        <path class="road" d="M430 300 C480 300 510 310 545 335"/>
+        <path class="route" id="route" d="M130 120 C170 220 210 235 285 270 C330 290 330 345 350 440 C400 430 470 390 580 440"/>
+
+        <!-- stage nodes -->
+        <g id="nodes">
+          <circle class="node" cx="130" cy="120" r="18" fill="#ffd21a"/><text class="ntext" x="130" y="120">1</text>
+          <circle class="node" cx="335" cy="105" r="18" fill="#20d9ff"/><text class="ntext" x="335" y="105">2</text>
+          <circle class="node" cx="350" cy="270" r="18" fill="#ffd21a"/><text class="ntext" x="350" y="270">3</text>
+          <circle class="node" cx="380" cy="330" r="18" fill="#20d9ff"/><text class="ntext" x="380" y="330">4</text>
+          <circle class="node" cx="390" cy="385" r="18" fill="#b66cff"/><text class="ntext" x="390" y="385">5</text>
+          <circle class="node" cx="575" cy="440" r="18" fill="#b66cff"/><text class="ntext" x="575" y="440">6</text>
+          <circle class="node" cx="350" cy="455" r="18" fill="#20d9ff"/><text class="ntext" x="350" y="455">7</text>
+          <circle class="node" cx="130" cy="285" r="18" fill="#ff5262"/><text class="ntext" x="130" y="285">8</text>
+          <circle class="node" cx="350" cy="500" r="18" fill="#43e27c"/><text class="ntext" x="350" y="500">9</text>
+          <circle class="node" cx="525" cy="130" r="18" fill="#ff9c3d"/><text class="ntext" x="525" y="130">10</text>
+          <circle class="node" cx="400" cy="300" r="18" fill="#ff9c3d"/><text class="ntext" x="400" y="300">11</text>
+          <circle class="node" cx="350" cy="335" r="18" fill="#ff9c3d"/><text class="ntext" x="350" y="335">12</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="mapControls">
+      <button onclick="showCurrent()">🎯 محل این مرحله</button>
+      <button onclick="showAll()">🗺️ کل مسیر</button>
+    </div>
+    <div class="legend">
+      <span><i class="dot" style="background:#ffd21a"></i>Power / Breaker</span>
+      <span><i class="dot" style="background:#20d9ff"></i>Research</span>
+      <span><i class="dot" style="background:#b66cff"></i>Orbs</span>
+      <span><i class="dot" style="background:#ff5262"></i>Nathan</span>
+      <span><i class="dot" style="background:#43e27c"></i>Nodes</span>
+      <span><i class="dot" style="background:#ff9c3d"></i>Final</span>
+    </div>
+  </div>
+
+  <input class="search" id="search" placeholder="🔎 جستجو در مرحله‌ها..." oninput="filterSteps(this.value)">
+
+  <div class="quick">
+    <button onclick="jump(0)">⚡ AMP</button>
+    <button onclick="jump(2)">🔌 Breaker</button>
+    <button onclick="jump(7)">💾 Nathan</button>
+    <button onclick="jump(11)">🐙 Boss</button>
+  </div>
+
+  <div class="card step" id="stepCard"></div>
+
+  <div class="nav">
+    <button onclick="prevStep()">‹ قبلی</button>
+    <button class="go" id="nextBtn" onclick="completeAndNext()">☑ انجام شد → بعدی</button>
+    <button onclick="nextStep()">بعدی ›</button>
+  </div>
+
+  <div class="footer">
+    نکته: این صفحه کاملاً مستقل است و به اینترنت، فونت، CDN، عکس یا JavaScript خارجی نیاز ندارد.
+    پیشرفت با localStorage روی همان مرورگر ذخیره می‌شود.
+    نقشه بالا یک نمای شماتیک و راهبری برای Quest است؛ برای جزئیات هندسی خود مپ بازی، Tac Map داخل بازی مرجع نهایی است.
+  </div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const STEPS=[
+{tab:"⚡ AMP",c:"yellow",title:"سه AMP را روشن کن + Pack-a-Punch",where:"Guard Station → Living Quarters → Bio Lab",
+do:["در Guard Station، AMP شماره ۱ را فعال کن و موج دفاع را کامل کن.","در Living Quarters، AMP شماره ۲ را فعال کن و دفاع را کامل کن.","در Bio Lab، AMP شماره ۳ را فعال کن و دفاع را کامل کن.","پس از فعال شدن مسیر، وارد آب Bio Lab شو و آسانسور Pack-a-Punch را بالا بیاور."],
+tip:"قبل از رفتن جلو مطمئن شو هر سه AMP واقعاً کامل شده‌اند؛ اگر یکی هنوز فعال نشده، Quest را جلو نبر."},
+{tab:"💻 Laptops",c:"cyan",title:"هر سه Laptop را فعال کن",where:"Docks / Storage Area / Communications",
+do:["Laptopهای موردنیاز را در سه محل علامت‌گذاری‌شده پیدا کن.","هر Laptop را از روبه‌رو Interact کن تا فعال شود.","اگر Prompt نمی‌آید، یک قدم عقب/جلو شو و دوباره نگاه کن.","بعد از فعال شدن هر سه، به مرحله بعد برو."],
+tip:"ترتیب سه Laptop مهم نیست؛ مهم این است که هر سه فعال شوند."},
+{tab:"🔌 Breakers",c:"yellow",title:"Circuit Breakerها را با Dead Wire انجام بده",where:"Pack-a-Punch Lift → Living Quarters → Rec Yard",
+do:["یک سلاح با Dead Wire آماده کن.","روی مسیر Inclined Lift، Breakerهای مربوط را با شلیک Dead Wire فعال کن.","بعد از رسیدن Lift، Breakerهای باقی‌مانده در مسیر Living Quarters و Rec Yard را کامل کن.","اگر مرحله جلو نرفت، دوباره هر Breaker را بررسی کن و دنبال جرقه/فعال شدن مدار بگرد."],
+tip:"این بخش حساس است؛ با عجله از روی Prompt رد نشو. هر Breaker باید واقعاً تغییر وضعیت بدهد."},
+{tab:"🔑 Research",c:"cyan",title:"EMF Fob و Multiphasic Resonator",where:"Research Office → Sea Tower",
+do:["بعد از باز شدن مسیر، وارد Research Office شو.","زامبی لازم را بکش و EMF Fob را بردار.","به Sea Tower برو و Briefcase مربوط به Resonator را پیدا و باز کن.","Multiphasic Resonator را بردار و به دستگاه Research Office برگردان."],
+tip:"قبل از باز کردن Briefcase، Armor و مهماتت را آماده کن."},
+{tab:"🧮 X/Y/Z",c:"cyan",title:"معمای X / Y / Z را حل کن",where:"Research Office + Whiteboardها",
+do:["Resonator را روی دستگاه قرار بده و اطلاعات کامپیوتر را بررسی کن.","مقادیر X/Y/Z را از Whiteboardها استخراج کن و معادلات را حل کن.","کد همان بازی را وارد کن؛ کد ثابت نیست.","وقتی مقصد روی Tac Map مشخص شد، Resonator را فراموش نکن و آن را بردار."],
+tip:"اگر محاسبه نمی‌خواهی، از روش جایگزین داخل بازی برای گرفتن جواب استفاده کن؛ عدد ثابت از یک بازی به بازی دیگر قابل اتکا نیست."},
+{tab:"🟣 Orb",c:"purple",title:"سه Orb و Resonator",where:"جزیره‌های علامت‌گذاری‌شده روی Tac Map",
+do:["قایق بردار و به مقصدی برو که Tac Map برای Resonator نشان می‌دهد.","Orb را فعال کن و فقط دشمنان/اهداف لازم همان مرحله را انجام بده.","انرژی/توپ مربوط را داخل Orb اصلی برگردان تا Ritual کامل شود.","Resonator را بعد از تکمیل هر بخش بردار و به مقصد بعدی برو.","هر سه بخش را کامل کن و پاداش مرحله را بگیر."],
+tip:"مقصد دقیق Orbها را بر اساس علامت Tac Map همان بازی دنبال کن؛ جای جزیره/ترتیب را از روی یک عدد ثابت حدس نزن."},
+{tab:"🔫 Build",c:"cyan",title:"DRI-11 Beamsmasher",where:"Research Office — Workbench",
+do:["مواد و آیتم‌های لازم Quest را به Research Office برگردان.","سراغ Workbench برو و تعامل ساخت را انجام بده.","DRI-11 Beamsmasher را دریافت کن.","قبل از مرحله Hard Drive، مهمات و Armor را کامل کن."],
+tip:"اگر Beamsmasher را از Mystery Box داری، باز هم مراحل Quest قبلی را باید طبق ترتیب خود بازی پیش ببری."},
+{tab:"💾 Nathan",c:"red",title:"Hard Drive → کد → Nathan",where:"Tentacle Trapها → Peck → سه سرنخ عددی → Bio Lab",
+do:["Tentacle Trap مناسب را پیدا کن و Hard Drive را به دست بیاور.","Hard Drive را به Peck تحویل بده.","سه سرنخ عددی مربوط به کد را در محل‌های تعیین‌شده بررسی کن.","کد را به ترتیب درست وارد کن و آماده مبارزه Nathan شو.","در Co-op، بازیکنان باید وظایف همزمان/Valveها را طبق Prompt انجام دهند."],
+tip:"کد را از بازی خودت بخوان؛ کد ثابت نیست. قبل از وارد کردن، سه رقم را دوباره چک کن."},
+{tab:"🟢 Nodes",c:"green",title:"Gold Keycard و دو Node Connector",where:"Bio Lab → Shipwreck → محل‌های Node",
+do:["بعد از Nathan، Gold Keycard را از محل پاداش بردار.","به Shipwreck برو و Node Connector مربوط را پیدا کن.","اتاق/Lockdown را کامل کن و Connector را با خودت ببر.","از محل‌های مشخص‌شده، دو Node خراب را پیدا و تعمیر کن.","در Solo اگر فقط یکی را می‌توانی حمل کنی، یکی را نصب کن و برای دیگری برگرد."],
+tip:"فقط محل‌هایی را تعمیر کن که بازی واقعاً خراب بودنشان را نشان می‌دهد؛ سه نقطه را کورکورانه نزن."},
+{tab:"🛰️ Buoy",c:"orange",title:"Hacking Device + سه Buoy",where:"Guard Station → آب اطراف Terminus",
+do:["Hacking Device را از محل تحویل/Drop Box بگیر.","قایق را از قبل آماده کن و مسیر سه Buoy را در ذهن داشته باش.","Buoy اول را Hack کن؛ از شروع Hack، زمان محدود می‌شود.","دو Buoy بعدی را سریع پشت سر هم Hack کن.","اگر زمان کم است، درگیر زامبی‌های غیرضروری نشو؛ مستقیم با قایق مسیر را برو."],
+tip:"قبل از شروع Hack، Armor، مهمات و قایق آماده باشند. زمان را با Loot کردن هدر نده."},
+{tab:"💣 Bomb",c:"orange",title:"سه Bomb را خنثی کن",where:"Bio Lab — اطراف Melee Macchiato",
+do:["بعد از Buoy سوم فوراً به Bio Lab برگرد.","Bomb اول را پیدا و Defuse کن.","Bomb دوم را پیدا و Defuse کن.","Bomb سوم را پیدا و Defuse کن.","در Co-op بازیکنان دیگر باید بازیکن در حال Defuse را پوشش دهند."],
+tip:"این مرحله تایمر دارد؛ قبل از شروع، مسیر برگشت و مهمات را آماده کن. تجهیزات کنترل جمعیت را برای لحظه Defuse نگه دار."},
+{tab:"🐙 BOSS",c:"orange",title:"Patient 13 — فایت نهایی",where:"Bio Lab → درِ Boss Fight",
+do:["قبل از ورود: Armor کامل، مهمات، Pack-a-Punch مناسب و Self Revive/ابزار نجات داشته باش.","Phase اول: روی Weak Pointهای قابل‌اصابت تمرکز کن و Damage بیهوده به بدنه نده.","وقتی Weak Pointهای مرحله بعد ظاهر می‌شوند، هدف را عوض کن و از Cover استفاده کن.","در Phase نهایی، Weak Pointهای فعال را سریع بزن و از حملات Area/آبی فاصله بگیر.","بعد از مرگ Boss، مطمئن شو پاداش/پایان Quest را دریافت کرده‌ای."],
+tip:"این دروازه یک نقطه بدون بازگشت است؛ قبل از ورود همه‌چیز را آماده کن."}
+];
+
+let current=Number(localStorage.getItem("tq_step")||0);
+let done=JSON.parse(localStorage.getItem("tq_done")||"[]");
+let filtered=[...STEPS];
+
+function save(){localStorage.setItem("tq_step",current);localStorage.setItem("tq_done",JSON.stringify(done))}
+function render(){
+  if(!STEPS[current]) current=0;
+  const s=STEPS[current];
+  document.getElementById("bar").style.width=((current+1)/STEPS.length*100)+"%";
+  document.getElementById("mapTitle").textContent=s.where;
+  document.getElementById("mapMode").textContent="مرحله "+(current+1)+" از "+STEPS.length;
+  const checked=!!done[current];
+  document.getElementById("stepCard").innerHTML=
+    `<div class="stepTop"><div class="badge ${s.c}">${current+1}</div><div><div class="kicker">${s.tab} · مرحله ${current+1} از ${STEPS.length}</div><h2>${s.title}</h2><div class="where">📍 ${s.where}</div></div></div>
+    <ol>${s.do.map(x=>`<li>${x}</li>`).join("")}</ol>
+    <div class="tip">💡 <b>نکته:</b> ${s.tip}</div>
+    <button class="done ${checked?"checked":""}" onclick="completeAndNext()">${checked?"✓ انجام شد — برو مرحله بعد":"☐ انجام دادم — تیک بزن و برو بعدی"}</button>`;
+  document.getElementById("nextBtn").textContent=checked?"✓ ثبت شده → بعدی":"☑ انجام شد → بعدی";
+  highlightNode(current+1);
+  save();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function highlightNode(n){
+  document.querySelectorAll("#nodes circle").forEach((c,i)=>{
+    c.style.opacity=(i===n-1)?1:.55;
+    c.setAttribute("r",i===n-1?23:18);
+  });
+}
+function showCurrent(){
+  highlightNode(current+1);
+  document.getElementById("mapMode").textContent="🎯 محل مرحله "+(current+1);
+  document.querySelector(".mapWrap").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showAll(){
+  document.querySelectorAll("#nodes circle").forEach(c=>{c.style.opacity=1;c.setAttribute("r",18)});
+  document.getElementById("mapMode").textContent="🗺️ کل مسیر";
+}
+function completeAndNext(){
+  done[current]=true;save();
+  if(current<STEPS.length-1){current++;render();toast("✓ مرحله ثبت شد")}
+  else {render();toast("🏆 Quest کامل شد!")}
+}
+function nextStep(){if(current<STEPS.length-1){current++;render()}}
+function prevStep(){if(current>0){current--;render()}}
+function jump(n){current=n;render()}
+function filterSteps(q){
+  q=q.trim().toLowerCase();
+  if(!q){filtered=[...STEPS];return}
+  const i=STEPS.findIndex(s=>(s.title+" "+s.where+" "+s.tab+" "+s.do.join(" ")).toLowerCase().includes(q));
+  if(i>=0){current=i;render();toast("🔎 مرحله مرتبط پیدا شد")}
+  else toast("چیزی پیدا نشد");
+}
+function resetAll(){
+  if(confirm("همه تیک‌ها پاک شود و از مرحله ۱ شروع کنیم؟")){
+    localStorage.removeItem("tq_step");localStorage.removeItem("tq_done");
+    current=0;done=[];render();toast("ریست شد");
+  }
+}
+let toastTimer;
+function toast(t){
+  const el=document.getElementById("toast");el.textContent=t;el.style.display="block";
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display="none",1600);
+}
+render();
+</script>
+</body>
+</html>
